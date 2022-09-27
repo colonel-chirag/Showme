@@ -1,0 +1,155 @@
+import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
+
+class OnboardingPageWidget extends StatefulWidget {
+  const OnboardingPageWidget({Key? key}) : super(key: key);
+
+  @override
+  _OnboardingPageWidgetState createState() => _OnboardingPageWidgetState();
+}
+
+class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 1000,
+      delay: 1000,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(),
+      finalState: AnimationState(),
+    ),
+    'columnOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 100,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(),
+      finalState: AnimationState(),
+    ),
+    'buttonOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 1010,
+      delay: 440,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFF1E2429),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF4B39EF), Color(0xFFEE8B60)],
+            stops: [0, 1],
+            begin: AlignmentDirectional(1, -1),
+            end: AlignmentDirectional(-1, 1),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(150, 150, 150, 150),
+                child: Lottie.network(
+                  'https://assets4.lottiefiles.com/private_files/lf30_ji43sg7w.json',
+                  width: 150,
+                  height: 130,
+                  fit: BoxFit.cover,
+                  animate: true,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+              child: GradientText(
+                'Welcome to Showme',
+                style: FlutterFlowTheme.of(context).title1.override(
+                      fontFamily: 'Lexend Deca',
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                colors: [
+                  FlutterFlowTheme.of(context).primaryBtnText,
+                  FlutterFlowTheme.of(context).secondaryColor
+                ],
+                gradientDirection: GradientDirection.ltr,
+                gradientType: GradientType.linear,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 50),
+              child: Text(
+                'Build Presentation Effortlessly',
+                style: FlutterFlowTheme.of(context).subtitle2.override(
+                      fontFamily: 'Poppins',
+                      color: FlutterFlowTheme.of(context).primaryBtnText,
+                    ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
+              child: FFButtonWidget(
+                onPressed: () {
+                  print('Button pressed ...');
+                },
+                text: 'GET STARTED',
+                options: FFButtonOptions(
+                  width: 200,
+                  height: 40,
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                      ),
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ).animated([animationsMap['buttonOnPageLoadAnimation']!]),
+            ),
+          ],
+        ).animated([animationsMap['columnOnPageLoadAnimation']!]),
+      ).animated([animationsMap['containerOnPageLoadAnimation']!]),
+    );
+  }
+}
